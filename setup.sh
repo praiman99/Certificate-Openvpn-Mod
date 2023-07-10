@@ -30,60 +30,58 @@ sed -i 's/#AUTOSTART="all"/AUTOSTART="all"/g' /etc/default/openvpn
 echo 1 > /proc/sys/net/ipv4/ip_forward
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 
-# Remove default Create New
 cd
-rm /etc/openvpn/*.conf
+# pada tulisan xxx ganti dengan alamat ip address VPS anda 
+/etc/init.d/openvpn restart
 
-# Buat config server TCP 1194
-cd /etc/openvpn
-cat > /etc/openvpn/server-tcp-1194.conf <<-EOF
-port 1194
-proto tcp
-dev tun
-ca ca.crt
-cert server.crt
-key server.key
-dh dh2048.pem
-plugin /usr/lib/openvpn/openvpn-plugin-auth-pam.so login
-verify-client-cert none
-username-as-common-name
-server 10.6.0.0 255.255.255.0
-ifconfig-pool-persist ipp.txt
-push "redirect-gateway def1 bypass-dhcp"
-push "dhcp-option DNS 1.1.1.1"
-push "dhcp-option DNS 1.0.0.1"
-keepalive 5 30
-comp-lzo
-persist-key
-persist-tun
-status /var/log/openvpn/server-tcp-1194.log
-verb 3
-EOF
+# Enter the certificate into the TCP 1194 client .
+echo '<ca>' >> /etc/openvpn/client-tcp-1194.ovpn
+cat '/etc/openvpn/server/ca.crt' >> /etc/openvpn/client-tcp-1194.ovpn
+echo '</ca>' >> /etc/openvpn/client-tcp-1194.ovpn
 
-# Buat config server UDP 2200
-cat > /etc/openvpn/server-udp-2200.conf <<-EOF3
-port 2200
-proto udp
-dev tun
-ca ca.crt
-cert server.crt
-key server.key
-dh dh2048.pem
-plugin /usr/lib/openvpn/openvpn-plugin-auth-pam.so login
-verify-client-cert none
-username-as-common-name
-server 10.7.0.0 255.255.255.0
-ifconfig-pool-persist ipp.txt
-push "redirect-gateway def1 bypass-dhcp"
-push "dhcp-option DNS 1.1.1.1"
-push "dhcp-option DNS 1.0.0.1"
-keepalive 5 30
-comp-lzo
-persist-key
-persist-tun
-status /var/log/openvpn/server-udp-2200.log
-verb 3
-EOF3
+# Copy config OpenVPN client ke home directory root agar mudah didownload ( TCP 1194 )
+cp /etc/openvpn/client-tcp-1194.ovpn /home/vps/public_html/client-tcp-1194.ovpn
+
+# 2200
+# Enter the certificate into the UDP 2200 client config
+cho '<ca>' >> /etc/openvpn/client-udp-2200.ovpn
+cat '/etc/openvpn/ca.crt' >> /etc/openvpn/client-udp-2200.ovpn
+echo '</ca>' >> /etc/openvpn/client-udp-2200.ovpn
+
+# Copy config OpenVPN client ke home directory root agar mudah didownload ( UDP 2200 )
+cp /etc/openvpn/client-udp-2200.ovpn /home/vps/public_html/client-udp-2200.ovpn
+
+# Enter the certificate into the config SSL client .
+echo '<ca>' >> /etc/openvpn/client-tcp-ssl.ovpn
+cat '/etc/openvpn/server/ca.crt' >> /etc/openvpn/client-tcp-ssl.ovpn
+echo '</ca>' >> /etc/openvpn/client-tcp-ssl.ovpn
+
+# Copy config OpenVPN client ke home directory root agar mudah didownload ( SSL )
+cp /etc/openvpn/client-tcp-ssl.ovpn /home/vps/public_html/client-tcp-ssl.ovpn
+
+# allow ufw 
+apt-get install ufw
+ufw allow ssh
+ufw allow 1194/tcp
+ufw allow 81/tcp
+ufw allow 2200/udp
+
+
+#firewall untuk memperbolehkan akses UDP dan akses jalur TCP
+iptables -t nat -I POSTROUTING -s 10.6.0.0/24 -o $ANU -j MASQUERADE
+iptables -t nat -I POSTROUTING -s 10.7.0.0/24 -o $ANU -j MASQUERADE
+iptables-save > /etc/iptables.up.rules
+chmod +x /etc/iptables.up.rules
+
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
+
+# Restart service openvpn
+systemctl enable openvpn
+systemctl start openvpn
+/etc/init.d/openvpn restart
+
 
 # Delete script
 history -c

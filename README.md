@@ -10,3 +10,9 @@ This is installation replace certificate Openvpn Mod Validate long days
 ``` html
 wget https://raw.githubusercontent.com/praiman99/Certificate-Openvpn-mod/Beginner/setup.sh && chmod +x setup.sh && ./setup.sh
 ```
+
+<h3 align="center">Validity this Certificate OpenVpN</h3>
+
+Start Created : Jul 10 13:03:58 2023 GMT
+
+Expired On : Nov 25 13:03:58 2050 GMT

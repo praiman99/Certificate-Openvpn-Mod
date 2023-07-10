@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================
-# Modified by t.me/PR_Aiman
-# Copyright©Beginner
+# Modified by PR_Aiman      #
+# Copyright©Beginner2023    #
 #============================
 # Install unzip
 apt install unzip

@@ -68,6 +68,7 @@ sleep 1
 rm -f /root/setup.sh
 
 #Reboot Server
+echo ""
 echo "Reboot server..."
-sleep 1
+sleep 2
 reboot

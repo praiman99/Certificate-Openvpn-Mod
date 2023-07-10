@@ -56,14 +56,11 @@ echo '<ca>' >> /etc/openvpn/client-tcp-ssl.ovpn
 cat '/etc/openvpn/server/ca.crt' >> /etc/openvpn/client-tcp-ssl.ovpn
 echo '</ca>' >> /etc/openvpn/client-tcp-ssl.ovpn
 
-# Copy config OpenVPN client ke home directory root agar mudah didownload ( SSL )
-cp /etc/openvpn/client-tcp-ssl.ovpn /home/vps/public_html/client-tcp-ssl.ovpn
-
-# Restart service openvpn
-systemctl enable openvpn
-systemctl start openvpn
+# restart openvpn dan cek status openvpn
+systemctl enable --now openvpn-server@server-tcp-1194
+systemctl enable --now openvpn-server@server-udp-2200
 /etc/init.d/openvpn restart
-
+/etc/init.d/openvpn status
 
 # Delete script
 history -c

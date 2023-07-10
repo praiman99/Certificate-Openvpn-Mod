@@ -26,12 +26,12 @@ cp /usr/lib/x86_64-linux-gnu/openvpn/plugins/openvpn-plugin-auth-pam.so /usr/lib
 # nano /etc/default/openvpn
 sed -i 's/#AUTOSTART="all"/AUTOSTART="all"/g' /etc/default/openvpn
 
-# aktifkan ip4 forwarding
+# Active ipv4 forwarding
 echo 1 > /proc/sys/net/ipv4/ip_forward
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 
 cd
-# pada tulisan xxx ganti dengan alamat ip address VPS anda 
+# Restart openvpn
 /etc/init.d/openvpn restart
 
 # Enter the certificate into the TCP 1194 client .

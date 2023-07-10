@@ -4,5 +4,5 @@ This is installation replace certificate Openvpn Mod Validate long days
 <h3 align="center">Installation</h3>
 
 ``` html
-wget https://raw.githubusercontent.com/praiman99/Certificate-Openvpn-mod/Beginner/setup.sh && chmod +x setup.sh && sed -i -e 's/\r$//' setup.sh && ./setup.sh
+wget https://raw.githubusercontent.com/praiman99/Certificate-Openvpn-mod/Beginner/setup.sh && chmod +x setup.sh && ./setup.sh
 ```

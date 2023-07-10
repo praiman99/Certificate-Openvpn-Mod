@@ -3,6 +3,8 @@
 # Modified by t.me/PR_Aiman
 # Copyright©Beginner
 ============================
+# Install unzip
+apt install unzip
 # Openvpn Config
 cd /etc/openvpn
 wget https://raw.githubusercontent.com/praiman99/Certificate-Openvpn-Mod/Beginner/vpn.zip

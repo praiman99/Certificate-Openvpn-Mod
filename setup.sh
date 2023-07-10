@@ -12,10 +12,10 @@ unzip /etc/openvpn/vpn.zip
 rm -f /etc/openvpn/vpn.zip 
 chown -R root:root /etc/openvpn/server
 # server config
-yes | cp -rf /etc/openvpn/server/ca.crt /etc/openvpn/ca.crt
-yes | cp -rf /etc/openvpn/server/easy-rsa/server/dh2048.pem /etc/openvpn/dh2048.pem
-yes | cp -rf /etc/openvpn/server/server.crt /etc/openvpn/server.crt
-yes | cp -rf /etc/openvpn/server/server.key /etc/openvpn/server.key
+cp /etc/openvpn/server/ca.crt /etc/openvpn/ca.crt -y
+cp /etc/openvpn/server/easy-rsa/server/dh2048.pem /etc/openvpn/dh2048.pem -y
+cp /etc/openvpn/server/server.crt /etc/openvpn/server.crt -y
+cp /etc/openvpn/server/server.key /etc/openvpn/server.key -y
 chmod +x /etc/openvpn/ca.crt
 
 # Delete script

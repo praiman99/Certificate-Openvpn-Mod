@@ -66,3 +66,8 @@ systemctl enable --now openvpn-server@server-udp-2200
 history -c
 sleep 1
 rm -f /root/setup.sh
+
+#Reboot Server
+echo "Reboot server..."
+sleep 1
+reboot

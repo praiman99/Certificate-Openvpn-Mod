@@ -59,24 +59,6 @@ echo '</ca>' >> /etc/openvpn/client-tcp-ssl.ovpn
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( SSL )
 cp /etc/openvpn/client-tcp-ssl.ovpn /home/vps/public_html/client-tcp-ssl.ovpn
 
-# allow ufw 
-apt-get install ufw
-ufw allow ssh
-ufw allow 1194/tcp
-ufw allow 81/tcp
-ufw allow 2200/udp
-
-
-#firewall untuk memperbolehkan akses UDP dan akses jalur TCP
-iptables -t nat -I POSTROUTING -s 10.6.0.0/24 -o $ANU -j MASQUERADE
-iptables -t nat -I POSTROUTING -s 10.7.0.0/24 -o $ANU -j MASQUERADE
-iptables-save > /etc/iptables.up.rules
-chmod +x /etc/iptables.up.rules
-
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
-
 # Restart service openvpn
 systemctl enable openvpn
 systemctl start openvpn

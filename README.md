@@ -1,5 +1,5 @@
 # Certificate-Openvpn-Mod
-This is installation replace certificate Openvpn Mod Validate long days
+This is installation replace certificate Openvpn Mod long days
 
 <h3 align="center">After paste this script and show like this please type A and enter just all</h3>
 

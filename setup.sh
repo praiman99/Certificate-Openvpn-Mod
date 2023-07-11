@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================
-# Modified by PR_Aiman      #
+# Modified by PR Aiman      #
 # Copyright©Beginner2023    #
 #============================
 # Install unzip
